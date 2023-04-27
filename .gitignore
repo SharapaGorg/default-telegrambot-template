@@ -1,0 +1,8 @@
+.vscode/
+env/
+app.log
+__pycache__/
+database/base
+test.py
+assets/
+.idea
