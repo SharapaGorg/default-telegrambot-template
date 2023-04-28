@@ -4,7 +4,7 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from controller import dp, bot, logger
 from database import *
 from utils import Button
-from static.texts import *
+from static import *
 from utils import check_user_
 
 

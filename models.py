@@ -31,5 +31,3 @@ class Log(Base):
     content = Column(String, nullable=False)
     level = Column(String, nullable=False)
     date = Column(Integer, nullable=False) # timestamp
-    
-

@@ -1,8 +1,9 @@
 start = """
-Это сообщение, которое присылаются в ответ на команду /start
+This is the message sent in response to the command /start
 """
 
-default = 'Сообщение, которое присылается, если написать рандомный текст, не входящий в список установленных команд'
-decline_text = "Действие было успешно отменено"
+default = 'The message that is sent if you write a random text that is not included in the list of installed commands'
+decline_text = "The action was successfully canceled"
 
-tech = "Бот находится на временных технических работах по исправлению выявленных ошибок" 
+access_denied = "Access denied" # when regular user calls moder function
+tech = "The bot is on temporary technical work to fix the identified errors" 

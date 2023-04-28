@@ -6,3 +6,4 @@ database/base
 test.py
 assets/
 .idea
+config.py
