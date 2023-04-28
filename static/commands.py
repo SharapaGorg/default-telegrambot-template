@@ -1,4 +1,4 @@
 commands = {
     "/ping" : "default bot health check",
-    "/somecommand" : 'description of "somecommand" functional'   
+    '/button_slider' : 'button slider example'
 }
