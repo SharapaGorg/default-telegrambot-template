@@ -1,12 +1,14 @@
 import functools
-import time
-from aiogram.types import *
-import string
 import random
-from static import commands, access_denied
+import string
+import time
+
+from aiogram.dispatcher.storage import FSMContext
+from aiogram.types import *
 
 from controller import bot, dp, logger
 from database import *
+from static import *
 
 
 async def startup(message):
@@ -27,7 +29,14 @@ class Button(InlineKeyboardButton):
     wrapper of callback_query_handlers 
     that allows you to use buttons without creating callback_data 
 
-    [similar to the onClick function in javascript]
+    [similar to onClick function in javascript]
+
+    text: str
+    url: str
+    login_url: LoginUrl 
+    pay: bool
+    web_app: WebAppInfo
+
     """
 
     def __init__(self, *args, **kwargs):
@@ -73,7 +82,6 @@ class ButtonSlider:
         for i in range(start_point, start_point + self.rows * self.columns, self.columns):
             buttons_in_row = list()
 
-
             for k in range(self.columns):
                 try:
                     buttons_in_row.append(self.buttons[i + k])
@@ -106,11 +114,11 @@ class ButtonSlider:
             await self.render_page()
 
 
-def check_user_(coro):
-    """ decorator of check_user function below """
+def check_user(coro):
+    """ decorator of check_user_ function below """
     @functools.wraps(coro)
     async def wrapper(message: Message, *args, **kwargs):
-        await check_user(message)
+        await check_user_(message)
         try:
             return await coro(message, *args, **kwargs)
         except Exception as e:
@@ -119,7 +127,7 @@ def check_user_(coro):
     return wrapper
 
 
-def moder_check_(coro):
+def moder_check(coro):
     """ decorator of moder_check function below """
     @functools.wraps(coro)
     async def wrapper(message: Message, *args, **kwargs):
@@ -129,7 +137,7 @@ def moder_check_(coro):
     return wrapper
 
 
-async def check_user(message: Message):
+async def check_user_(message: Message):
     """ adds new users to database, and updates 'last seen' status of old users"""
     author = message.from_user
     users = get_users(author.id)
@@ -160,3 +168,4 @@ async def check_for_moder(message: Message) -> bool:
         return False
 
     return True
+

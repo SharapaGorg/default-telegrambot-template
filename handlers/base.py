@@ -1,9 +1,10 @@
 from aiogram.types import *
 from controller import dp
-from utils import check_user_
 from static import *
+from utils import check_user
+
 
 @dp.message_handler()
-@check_user_
+@check_user
 async def parse_left_messages(message : Message):
     await message.answer(default)
