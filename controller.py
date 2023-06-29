@@ -1,11 +1,13 @@
+import logging
+import sys
+
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from models import Base
-import logging, sys
 
 from config import TOKEN, RESERVE_TOKEN
+from models import Base
 
 ###### LOGGING ######
 LOG_FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
@@ -13,7 +15,7 @@ logging.basicConfig(
     filename='app.log',
     filemode='a',
     format=LOG_FORMAT,
-    level = logging.INFO,
+    level=logging.INFO,
     encoding='utf-8'
 )
 

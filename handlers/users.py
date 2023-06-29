@@ -5,6 +5,7 @@ from controller import bot, dp, logger
 from database import *
 from static import *
 from utils import *
+from widgets import ButtonSlider, Button
 
 
 @dp.message_handler(commands=['start'])

@@ -1,7 +1,7 @@
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher.storage import FSMContext
 from aiogram.types import *
-from utils import Button, moder_check
+from utils import moder_check
 from database import *
 import datetime
 
