@@ -1,12 +1,13 @@
 from sqlalchemy import *
 from controller import Session, engine
-from utils.models import User, Base
+from utils.models import User
 import time
 
 def get_users(
     telegram_id : str = None, 
     id : str = None,
-    _session = Session) -> list:
+    _session = Session) -> list[User]:
+
     users = select(User)
     
     if telegram_id is not None:

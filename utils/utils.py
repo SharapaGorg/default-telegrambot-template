@@ -1,7 +1,7 @@
 import functools
 import time
 
-from aiogram.dispatcher.storage import FSMContext
+# from aiogram.dispatcher.storage import FSMContext
 from aiogram.types import *
 
 from controller import bot, dp, logger

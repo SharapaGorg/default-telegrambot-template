@@ -13,6 +13,7 @@ class User(Base):
     last_seen = Column(String, nullable=False)
     username = Column(String, nullable=True)
     fullname = Column(String, nullable=True)
+    source_id = Column(Text, nullable=True)
 
 
 class Moderator(Base):
