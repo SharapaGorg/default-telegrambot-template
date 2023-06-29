@@ -1,4 +1,3 @@
-
 import logging
 import sys
 
@@ -8,7 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 from config import TOKEN, RESERVE_TOKEN
-from utils.models import Base
+# from utils.models import Base
 
 ###### LOGGING ######
 LOG_FORMAT = '%(asctime)s - %(levelname)s - %(message)s'
@@ -28,7 +27,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 
 ###### DATABASE ######
 engine = create_engine("sqlite:///database/base")
-Base.metadata.create_all(engine)
+# Base.metadata.create_all(engine)
 
 session_factory = sessionmaker(bind=engine)
 Session = scoped_session(session_factory)()

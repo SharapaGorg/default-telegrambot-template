@@ -5,7 +5,7 @@ from controller import bot, dp, logger
 from database import *
 from static import *
 from utils import *
-from widgets import ButtonSlider, Button
+from widgets import ButtonSlider, Button, Calendar
 
 
 @dp.message_handler(commands=['start'])
@@ -37,3 +37,13 @@ async def button_slider_example(message: Message):
 
 async def show_button_number(callback : CallbackQuery, button_number : int):
     await bot.send_message(callback.from_user.id, f"This is a button number : {button_number}")
+
+
+@dp.message_handler(commands=['calendar'])
+@check_user
+async def calendar_widget_example(message : Message):
+    message = await message.answer('What calendar widget looks like:')
+
+    calendar = Calendar(message)
+    await calendar.render_page()
+
