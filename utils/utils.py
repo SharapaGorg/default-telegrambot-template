@@ -1,6 +1,4 @@
 import functools
-import random
-import string
 import time
 
 from aiogram.dispatcher.storage import FSMContext

@@ -1,6 +1,6 @@
 from sqlalchemy import *
 from controller import Session, engine
-from models import Moderator, Base
+from utils.models import Moderator, Base
 from database import get_users
 
 def get_moders(telegram_id = None) -> list:

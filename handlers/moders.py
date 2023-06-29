@@ -3,7 +3,6 @@ from aiogram.dispatcher.storage import FSMContext
 from aiogram.types import *
 from utils import moder_check
 from database import *
-import datetime
 
 from controller import dp, bot, logger
 

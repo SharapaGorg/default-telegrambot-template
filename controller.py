@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 from config import TOKEN, RESERVE_TOKEN
-from models import Base
+from utils.models import Base
 
 ###### LOGGING ######
 LOG_FORMAT = '%(asctime)s - %(levelname)s - %(message)s'

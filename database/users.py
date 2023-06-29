@@ -1,6 +1,6 @@
 from sqlalchemy import *
 from controller import Session, engine
-from models import User, Base
+from utils.models import User, Base
 import time
 
 def get_users(
