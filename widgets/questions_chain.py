@@ -34,7 +34,10 @@ class QuestionsChain(AsyncClass):
             setattr(self.AnswerModel, question_key,
                     self.AnswerModel.exmaple_of_state_field)
 
-        await self.__ask(list(chain.values())[0], list(chain.keys())[0])
+
+    async def activate(self):
+        await self.__ask(self.questions[0], self.quest_keys[0])
+
 
     async def __ask(self, question: str, field_name: str):
         await getattr(self.AnswerModel, field_name).set()

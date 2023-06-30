@@ -59,8 +59,6 @@ async def quests_chain_widget_example(message: Message):
     user_id = message.from_user.id
 
     async def get_answers(answers: dict):
-        print('GOT ANSWERS')
-
         for answer in answers:
             print(answer, answers[answer])
 
@@ -68,6 +66,10 @@ async def quests_chain_widget_example(message: Message):
 
     questions = {'name': 'What is your name?',
                  'surname': 'What is your surname?',
-                 'smart' : 'Are you a smart person?'}
+                 'smart': 'Are you a smart person?'}
 
     chain = await QuestionsChain(user_id, questions, get_answers)
+
+    # you can define chain object and activate it whenever you want
+
+    await chain.activate()
