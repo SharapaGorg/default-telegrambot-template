@@ -5,7 +5,7 @@ from controller import bot, dp, logger
 from database import *
 from static import *
 from utils import *
-from widgets import ButtonSlider, Button, Calendar
+from widgets import *
 import datetime
 
 
@@ -17,7 +17,7 @@ async def start_(message: Message):
 
 @dp.message_handler(commands=['ping'])
 @check_user
-async def ping_(message : Message):
+async def ping_(message: Message):
     await message.answer("Pong!")
 
 
@@ -36,18 +36,38 @@ async def button_slider_example(message: Message):
     button_slider = ButtonSlider(message, buttons, columns=3, rows=4)
     await button_slider.render_page()
 
-async def show_button_number(callback : CallbackQuery, button_number : int):
+
+async def show_button_number(callback: CallbackQuery, button_number: int):
     await bot.send_message(callback.from_user.id, f"This is a button number : {button_number}")
 
 
 @dp.message_handler(commands=['calendar'])
 @check_user
-async def calendar_widget_example(message : Message):
+async def calendar_widget_example(message: Message):
     message = await message.answer('What calendar widget looks like:')
 
-    async def date_click_action(date : datetime.date):
+    async def date_click_action(date: datetime.date):
         await message.answer(f"User has chosen this date: {date.isoformat()}")
 
     calendar = Calendar(message, date_click_action)
     await calendar.render_page()
 
+
+@dp.message_handler(commands=['quests'])
+@check_user
+async def quests_chain_widget_example(message: Message):
+    user_id = message.from_user.id
+
+    async def get_answers(answers: dict):
+        print('GOT ANSWERS')
+
+        for answer in answers:
+            print(answer, answers[answer])
+
+        await bot.send_message(user_id, "Thanks for your answers!")
+
+    questions = {'name': 'What is your name?',
+                 'surname': 'What is your surname?',
+                 'smart' : 'Are you a smart person?'}
+
+    chain = await QuestionsChain(user_id, questions, get_answers)

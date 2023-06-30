@@ -10,7 +10,7 @@ class Calendar():
     def __init__(
         self,
         message: Message,
-        click_action : coroutine,
+        click_action: coroutine,
         start_month: int = None,
         show_current_month: bool = True,
         show_current_day: bool = True,
@@ -32,8 +32,9 @@ class Calendar():
 
         self.current_year = today.year
 
-    async def handle_chosen_date(self, callback : CallbackQuery, chosen_date : int):
-        date = datetime.date(self.current_year, self.current_month, chosen_date)
+    async def handle_chosen_date(self, callback: CallbackQuery, chosen_date: int):
+        date = datetime.date(
+            self.current_year, self.current_month, chosen_date)
 
         await self.click_action(date)
 
@@ -41,7 +42,8 @@ class Calendar():
         self.markup = InlineKeyboardMarkup()
 
         if self.show_current_month:
-            self.markup.add(Button(calendar.month_name[self.current_month]))
+            self.markup.add(
+                Button(calendar.month_name[self.current_month] + f' [{self.current_year}]'))
 
         weeks = calendar.Calendar().monthdayscalendar(
             self.current_year, self.current_month)
@@ -54,6 +56,7 @@ class Calendar():
                 today = datetime.datetime.today()
                 if str(today.day) == header \
                         and self.current_month == today.month \
+                        and self.current_year == today.year \
                         and self.show_current_day:
 
                     header = '[ ' + header + ' ]'
@@ -78,13 +81,28 @@ class Calendar():
         )
 
     async def go_to_next_page(self, callback: CallbackQuery):
+        passed = False
         if self.current_month + 1 <= 12:
             self.current_month += 1
+            passed = True
 
+        if self.current_month == 12:
+            self.current_month = 1
+            self.current_year += 1
+            passed = True
+
+        if passed:
             await self.render_page()
 
     async def go_to_previous_page(self, callback: CallbackQuery):
+        passed = False
         if self.current_month - 1 > 0:
             self.current_month -= 1
 
+        if self.current_month == 1:
+            self.current_month = 12
+            self.current_year -= 1
+            passed = True
+
+        if passed:
             await self.render_page()
