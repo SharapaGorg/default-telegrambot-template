@@ -8,15 +8,21 @@ from controller import bot, dp
 
 class QuestionsChain(AsyncClass):
     class AnswerModel(StatesGroup):
-        exmaple_of_state_field = State()
+        example_of_state_field = State()
 
-    async def __ainit__(self, target_id: int, chain: dict, after_complete : coroutine):
+    async def __ainit__(
+        self, 
+        target_id: int, 
+        chain: dict, 
+        after_complete : coroutine,
+        break_with_command : bool = False):
+
         """
-
         target_id : int - telegram ID of the person who will answer the chain of questions
         chain : dict - questions chain, format: { question_key : question }, example: { 'name' : 'What is your name?' }
         after_complete : async coroutine with dict arg, example: async some_function(answers : list)
 
+        !WARNING! this object works only with text messages (aiogram restrictions)
         """
 
         self.target_id = target_id
@@ -32,7 +38,7 @@ class QuestionsChain(AsyncClass):
 
         for question_key in self.quest_keys:
             setattr(self.AnswerModel, question_key,
-                    self.AnswerModel.exmaple_of_state_field)
+                    self.AnswerModel.example_of_state_field)
 
 
     async def activate(self):

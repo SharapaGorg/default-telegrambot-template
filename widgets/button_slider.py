@@ -1,5 +1,5 @@
 from aiogram.types import *
-from controller import dp, bot, logger
+from controller import dp, bot
 from widgets import Button
 
 

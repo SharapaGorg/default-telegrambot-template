@@ -1,5 +1,6 @@
 from aiogram.types import *
-from controller import bot, dp, logger
+from controller import bot, dp
+from utils import logger
 import string
 import random
 
@@ -32,4 +33,5 @@ class Button(InlineKeyboardButton):
                 return await coro(call, *args, **kwargs)
 
         except Exception as e:
+
             logger.error(f'{coro} - handler exception --> {e}')

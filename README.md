@@ -101,6 +101,8 @@ Widgets - by analogy with ui widgets - interface components
 This template contains the following widgets:
 * button
 * button slider
+* calendar
+* questions chain
 
 I think it makes no sense to explain what each of the widgets does, if it is not clear, just check for yourself
 

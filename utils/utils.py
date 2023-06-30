@@ -1,12 +1,12 @@
 import functools
 import time
 
-# from aiogram.dispatcher.storage import FSMContext
 from aiogram.types import *
 
-from controller import bot, dp, logger
+from controller import bot
 from database import *
 from static import *
+from .logging import logger
 
 
 async def startup(message):
