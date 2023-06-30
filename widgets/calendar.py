@@ -1,3 +1,4 @@
+from types import coroutine
 from aiogram.types import *
 from controller import bot
 from widgets import Button
@@ -9,6 +10,7 @@ class Calendar():
     def __init__(
         self,
         message: Message,
+        click_action : coroutine,
         start_month: int = None,
         show_current_month: bool = True,
         show_current_day: bool = True,
@@ -18,6 +20,7 @@ class Calendar():
         self.message = message
         self.show_current_month = show_current_month
         self.show_current_day = show_current_day
+        self.click_action = click_action
 
         self.next_page = Button(next_page_sign)
         self.previous_page = Button(prev_page_sign)
@@ -28,6 +31,11 @@ class Calendar():
             self.current_month = today.month
 
         self.current_year = today.year
+
+    async def handle_chosen_date(self, callback : CallbackQuery, chosen_date : int):
+        date = datetime.date(self.current_year, self.current_month, chosen_date)
+
+        await self.click_action(date)
 
     async def render_page(self):
         self.markup = InlineKeyboardMarkup()
@@ -50,7 +58,11 @@ class Calendar():
 
                     header = '[ ' + header + ' ]'
 
-                replaced.append(Button(header))
+                day_button = Button(header)
+                if day:
+                    day_button.onClick(self.handle_chosen_date, day)
+
+                replaced.append(day_button)
 
             self.markup.row(*replaced)
 

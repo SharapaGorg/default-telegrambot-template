@@ -6,6 +6,7 @@ from database import *
 from static import *
 from utils import *
 from widgets import ButtonSlider, Button, Calendar
+import datetime
 
 
 @dp.message_handler(commands=['start'])
@@ -44,6 +45,9 @@ async def show_button_number(callback : CallbackQuery, button_number : int):
 async def calendar_widget_example(message : Message):
     message = await message.answer('What calendar widget looks like:')
 
-    calendar = Calendar(message)
+    async def date_click_action(date : datetime.date):
+        await message.answer(f"User has chosen this date: {date.isoformat()}")
+
+    calendar = Calendar(message, date_click_action)
     await calendar.render_page()
 
