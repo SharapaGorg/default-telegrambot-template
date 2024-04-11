@@ -10,6 +10,7 @@ from .logging import logger
 
 
 async def startup(message):
+
     bot_self = await bot.get_me()
     print(f'Bot launched [@{bot_self.username}]')
 

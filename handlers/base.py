@@ -4,7 +4,7 @@ from static import *
 from utils import check_user
 
 
-@dp.message_handler()
+@dp.message()
 @check_user
 async def parse_left_messages(message : Message):
     await message.answer(default)

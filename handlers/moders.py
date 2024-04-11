@@ -1,10 +1,12 @@
 from aiogram.types import *
 from utils import moder_check
 from database import *
+from aiogram.filters.command import Command
 
 from controller import dp
 
-@dp.message_handler(commands=['users_stats'])
+
+@dp.message(Command('users_stats'))
 @moder_check
 async def send_users_stats(message : Message):
     users = get_users()

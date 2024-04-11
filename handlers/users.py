@@ -1,5 +1,5 @@
-from aiogram.dispatcher.filters.state import State, StatesGroup
-from aiogram.dispatcher.storage import FSMContext
+# from aiogram.dispatcher.filters.state import State, StatesGroup
+# from aiogram.dispatcher.storage import FSMContext
 from aiogram.types import *
 from controller import bot, dp
 from database import *
@@ -7,28 +7,28 @@ from static import *
 from utils import *
 from widgets import *
 import datetime
+from aiogram.filters.command import Command
 
-
-@dp.message_handler(commands=['start'])
+@dp.message(Command('start'))
 @check_user
 async def start_(message: Message):
     await message.answer(start, reply_markup=ReplyKeyboardRemove())
 
 
-@dp.message_handler(commands=['ping'])
+@dp.message(Command('ping'))
 @check_user
 async def ping_(message: Message):
     await message.answer("Pong!")
 
 
-@dp.message_handler(commands=['button_slider'])
+@dp.message(Command('button_slider'))
 @check_user
 async def button_slider_example(message: Message):
     message = await message.answer('What button slider looks like:')
 
     buttons = list()
     for k in range(25):
-        b = Button(f'button number {k}')
+        b = Button(text=f'button number {k}')
         b.onClick(show_button_number, k)
 
         buttons.append(b)
@@ -41,7 +41,7 @@ async def show_button_number(callback: CallbackQuery, button_number: int):
     await bot.send_message(callback.from_user.id, f"This is a button number : {button_number}")
 
 
-@dp.message_handler(commands=['calendar'])
+@dp.message(Command('calendar'))
 @check_user
 async def calendar_widget_example(message: Message):
     message = await message.answer('What calendar widget looks like:')
@@ -53,7 +53,7 @@ async def calendar_widget_example(message: Message):
     await calendar.render_page()
 
 
-@dp.message_handler(commands=['quests'])
+@dp.message(Command('quests'))
 @check_user
 async def quests_chain_widget_example(message: Message):
     user_id = message.from_user.id

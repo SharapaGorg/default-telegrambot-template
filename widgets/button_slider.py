@@ -13,8 +13,8 @@ class ButtonSlider:
         prev_page_sign: str = '<--',
         next_page_sign: str = '-->'
     ):
-        self.next_page = Button(next_page_sign)
-        self.previous_page = Button(prev_page_sign)
+        self.next_page = Button(text=next_page_sign)
+        self.previous_page = Button(text=prev_page_sign)
 
         self.message = message
         self.buttons = buttons
@@ -24,8 +24,7 @@ class ButtonSlider:
         self.current_page = 0
 
     async def render_page(self):
-        self.markup = InlineKeyboardMarkup()
-
+    
         start_point = self.current_page * self.rows * self.columns
         for i in range(start_point, start_point + self.rows * self.columns, self.columns):
             buttons_in_row = list()
@@ -36,12 +35,15 @@ class ButtonSlider:
                 except IndexError:
                     break
 
-            self.markup.row(*buttons_in_row)
+            self.markup.add(*buttons_in_row)
 
         self.previous_page.onClick(self.go_to_previous_page)
         self.next_page.onClick(self.go_to_next_page)
 
-        self.markup.row(self.previous_page, self.next_page)
+
+        self.markup = InlineKeyboardMarkup()
+
+        self.markup.add(self.previous_page, self.next_page)
 
         await bot.edit_message_reply_markup(
             self.message.chat.id,

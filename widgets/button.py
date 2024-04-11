@@ -21,17 +21,19 @@ class Button(InlineKeyboardButton):
     """
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        print('AЛО БЛЯТЬ ДАЛБОЕБ')
+        print(len(args), kwargs)
 
-        self.callback_data = ''.join(random.choice(
-            string.ascii_uppercase + string.digits) for _ in range(32))
+        # self.callback_data = ''.join(random.choice(
+            # string.ascii_uppercase + string.digits) for _ in range(32))
+
+        super().__init__(*args, **kwargs)
 
     def onClick(self, coro, *args, **kwargs):
         try:
-            @dp.callback_query_handler(lambda call: call.data == self.callback_data)
+            @dp.callback_query(lambda call: call.data == self.callback_data)
             async def some_coro(call):
                 return await coro(call, *args, **kwargs)
 
         except Exception as e:
-
             logger.error(f'{coro} - handler exception --> {e}')
