@@ -1,16 +1,13 @@
-# from aiogram.utils import executor
-# from utils import startupx
 from controller import dp, bot
+from utils import startup
 import asyncio
 
 
 import handlers
 
-# executor.start_polling(dp, skip_updates=True, on_startup=startup)
-
-
 async def main():
     await bot.delete_webhook(drop_pending_updates=True)
+    dp.startup.register(startup)
     await dp.start_polling(bot)
 
 

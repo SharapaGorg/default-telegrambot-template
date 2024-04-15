@@ -3,21 +3,42 @@ import time
 
 from aiogram.types import *
 
+from rich import print
+from rich.table import Table as RichTable
+from rich.console import Console
+
 from controller import bot
 from database import *
 from static import *
 from .logging import logger
 
-
-async def startup(message):
-
+async def startup():
     bot_self = await bot.get_me()
-    print(f'Bot launched [@{bot_self.username}]')
-
+    print("Bot launch initiated")
+    print(f"Username: [bold green]@{bot_self.username}[/bold green]")
+    print("Nickname: ", bot_self.full_name)
+    
     suggesting_commands = [
-        BotCommand(command_name, description=command_desc) for command_name, command_desc in commands.items()
+        BotCommand(command=command_name, description=command_desc) for command_name, command_desc in commands.items()
     ]
-
+    
+    console = Console()
+    table = RichTable(
+        "Name", 
+        "Description", 
+        show_header=True, 
+        header_style="bold cyan",
+        title="[bold green]List of bot commands:[/bold green]"
+    )
+    
+    for command in commands:
+        table.add_row(f"[bold]{command}[/bold]", f"[italic]{commands[command]}[/italic]")
+        table.add_section()
+    
+    print("\n")
+    console.print(table)
+        
+    
     await bot.set_my_commands(suggesting_commands)
 
 

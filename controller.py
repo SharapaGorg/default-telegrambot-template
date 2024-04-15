@@ -1,7 +1,6 @@
 import sys
 
 from aiogram import Bot, Dispatcher
-# from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 import datetime

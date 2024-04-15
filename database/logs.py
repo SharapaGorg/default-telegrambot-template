@@ -1,6 +1,6 @@
 from sqlalchemy import *
 from controller import Session, engine
-from utils.models import Log, Base
+from models import Log, Base
 import time
 
 def get_logs(
