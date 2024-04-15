@@ -7,6 +7,7 @@ from rich import print
 from rich.table import Table as RichTable
 from rich.console import Console
 
+
 from controller import bot
 from database import *
 from static import *
@@ -14,10 +15,13 @@ from .logging import logger
 
 async def startup():
     bot_self = await bot.get_me()
+
+    
     print("Bot launch initiated")
     print(f"Username: [bold green]@{bot_self.username}[/bold green]")
-    print("Nickname: ", bot_self.full_name)
-    
+    print("Nickname: ", bot_self.full_name) 
+        
+        
     suggesting_commands = [
         BotCommand(command=command_name, description=command_desc) for command_name, command_desc in commands.items()
     ]
