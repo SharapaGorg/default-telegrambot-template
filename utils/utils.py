@@ -1,5 +1,6 @@
 import functools
 import time
+from random import randint
 
 from aiogram.types import *
 
@@ -15,9 +16,8 @@ from .logging import logger
 
 async def startup():
     bot_self = await bot.get_me()
-
     
-    print("Bot launch initiated")
+    print("Bot launch initiated [+]")
     print(f"Username: [bold green]@{bot_self.username}[/bold green]")
     print("Nickname: ", bot_self.full_name) 
         
@@ -43,8 +43,7 @@ async def startup():
     console.print(table)
         
     
-    await bot.set_my_commands(suggesting_commands)
-
+    await bot.set_my_commands(suggesting_commands) 
 
 def check_user(coro):
     """ decorator of check_user_ function below """
