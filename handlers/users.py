@@ -7,6 +7,7 @@ from widgets import *
 import datetime
 from aiogram.filters.command import Command
 from aiogram.fsm.context import FSMContext
+from random import randint
 
 
 @dp.message(Command("start"))
@@ -55,27 +56,29 @@ async def calendar_widget_example(message: Message):
     await calendar.render_page()
 
 
-# todo: fix bug with incorrect sender (while one user answering quest chain, other user got 'Thanks for your answers' message)
-# possibly state became common for all users somehow, that is a problem
-async def get_answers(user_id, answers: dict):
-    for answer in answers:
-        print(answer, answers[answer])
-
-    await bot.send_message(user_id, "Thanks for your answers!")
 
 @dp.message(Command("quests"))
 @check_user
 async def quests_chain_widget_example(message: Message, state: FSMContext):
     user_id = message.from_user.id
-
+    temp = randint(1, 100)
+    
     questions = {
         "name": "What is your name?",
         "surname": "What is your surname?",
         "smart": "Are you a smart person?",
     }
+    print(temp)
+
+    async def get_answers(answers: dict):
+        print(temp)
+        for answer in answers:
+            print(answer, answers[answer])
+        
+        await bot.send_message(user_id, "Thanks for your answers!")
 
     chain = await QuestionsChain(
-        user_id, questions, lambda answers: get_answers(user_id, answers), state
+        user_id, questions, get_answers, state
     )
 
     await chain.activate()

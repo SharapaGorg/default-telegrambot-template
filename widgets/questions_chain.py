@@ -5,6 +5,8 @@ from aiogram.fsm.context import FSMContext
 from async_class import AsyncClass
 from controller import bot, dp
 from widgets import Button
+from aiogram import flags
+import random, string
 
 
 class QuestionsChain(AsyncClass):
@@ -42,9 +44,16 @@ class QuestionsChain(AsyncClass):
 
         self.complete_coroutine = after_complete
 
+        # generating encoding key to avoid conflicts with the same @dp.message(field) - field is the same
+        self.encoding_key = "".join(
+            random.choice(string.ascii_uppercase + string.digits) for _ in range(32)
+        )
+
         for question_key in self.quest_keys:
             setattr(
-                self.AnswerModel, question_key, self.AnswerModel.example_of_state_field
+                self.AnswerModel,
+                question_key + self.encoding_key,
+                self.AnswerModel.example_of_state_field,
             )
 
     async def activate(self):
@@ -53,7 +62,7 @@ class QuestionsChain(AsyncClass):
     async def __ask(
         self, question: str, field_name: str, state: FSMContext, is_first_question=False
     ):
-        field = getattr(self.AnswerModel, field_name)
+        field = getattr(self.AnswerModel, field_name + self.encoding_key)
         await state.set_state(field)
 
         if is_first_question and self.first_button is not None:
@@ -77,9 +86,12 @@ class QuestionsChain(AsyncClass):
                 data={self.quest_keys[self.current_quest_key - 1]: message.text}
             )
 
+            
+    
             if self.current_quest_key == len(self.quest_keys):
                 await state.clear()
                 await self.complete_coroutine(self.answers)
+
                 return
 
             await self.__ask(
@@ -87,3 +99,5 @@ class QuestionsChain(AsyncClass):
                 self.quest_keys[self.current_quest_key],
                 state,
             )
+
+        

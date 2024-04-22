@@ -21,13 +21,11 @@ class Button(InlineKeyboardButton):
     """
 
     def __init__(self, *args, **kwargs):
-        print('AЛО БЛЯТЬ ДАЛБОЕБ')
-        print(len(args), kwargs)
-
-        # self.callback_data = ''.join(random.choice(
-            # string.ascii_uppercase + string.digits) for _ in range(32))
-
         super().__init__(*args, **kwargs)
+
+        self.callback_data = ''.join(random.choice(
+            string.ascii_uppercase + string.digits) for _ in range(32))
+
 
     def onClick(self, coro, *args, **kwargs):
         try:
