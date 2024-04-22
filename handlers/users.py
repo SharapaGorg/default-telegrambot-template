@@ -55,16 +55,18 @@ async def calendar_widget_example(message: Message):
     await calendar.render_page()
 
 
+# todo: fix bug with incorrect sender (while one user answering quest chain, other user got 'Thanks for your answers' message)
+# possibly state became common for all users somehow, that is a problem
+async def get_answers(user_id, answers: dict):
+    for answer in answers:
+        print(answer, answers[answer])
+
+    await bot.send_message(user_id, "Thanks for your answers!")
+
 @dp.message(Command("quests"))
 @check_user
 async def quests_chain_widget_example(message: Message, state: FSMContext):
     user_id = message.from_user.id
-
-    async def get_answers(user_id, answers: dict):
-        for answer in answers:
-            print(answer, answers[answer])
-
-        await bot.send_message(user_id, "Thanks for your answers!")
 
     questions = {
         "name": "What is your name?",

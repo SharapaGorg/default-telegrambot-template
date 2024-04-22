@@ -78,10 +78,8 @@ class QuestionsChain(AsyncClass):
             )
 
             if self.current_quest_key == len(self.quest_keys):
-                print(self.current_quest_key, len(self.quest_keys))
                 await state.clear()
                 await self.complete_coroutine(self.answers)
-                await state.clear()
                 return
 
             await self.__ask(
