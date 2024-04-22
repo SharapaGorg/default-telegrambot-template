@@ -3,14 +3,15 @@ import sys
 from aiogram import Bot, Dispatcher
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from utils.parsers import ConfigParser
 import datetime
 
-from config import TOKEN, RESERVE_TOKEN
+config_parser = ConfigParser()
 
 
 # clue : https://github.com/MasterGroosha/aiogram-3-guide/blob/master/code/01_quickstart/bot.py
 ###### APP ######
-bot = Bot(RESERVE_TOKEN if sys.platform == 'win32' else TOKEN, parse_mode=None)
+bot = Bot(config_parser.token, parse_mode=None)
 dp = Dispatcher()
 dp["started_at"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
