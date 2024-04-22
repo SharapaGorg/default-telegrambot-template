@@ -43,7 +43,9 @@ class QuestionsChain(AsyncClass):
         self.complete_coroutine = after_complete
 
         for question_key in self.quest_keys:
-            setattr(self.AnswerModel, question_key, State())
+            setattr(
+                self.AnswerModel, question_key, self.AnswerModel.example_of_state_field
+            )
 
     async def activate(self):
         await self.__ask(self.questions[0], self.quest_keys[0], self.state, True)
@@ -76,8 +78,10 @@ class QuestionsChain(AsyncClass):
             )
 
             if self.current_quest_key == len(self.quest_keys):
+                print(self.current_quest_key, len(self.quest_keys))
                 await state.clear()
                 await self.complete_coroutine(self.answers)
+                await state.clear()
                 return
 
             await self.__ask(
