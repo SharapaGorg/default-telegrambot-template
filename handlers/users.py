@@ -30,9 +30,9 @@ async def button_slider_example(message: Message):
     buttons = list()
     for k in range(25):
         b = Button(text=f"button number {k}")
-        b.onClick(show_button_number, k)
-
         buttons.append(b)
+
+        b.onClick(show_button_number, k)
 
     button_slider = ButtonSlider(message, buttons, columns=3, rows=4)
     await button_slider.render_page()

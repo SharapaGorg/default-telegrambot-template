@@ -12,6 +12,11 @@ Features of this repo as framework:
  - division of functions by permissions (ordinary user / moderator)
  - well-thought-out database structure with the necessary tables (users/moderators/logs)
 
+
+## Futured Features (TODO)
+
+- add docker
+
 ## Quick start
 
 Clone directory
@@ -26,11 +31,12 @@ Go to cloned directory, make virtual environment, activate it and install requir
 
 ```pip install -r requirements.txt```
 
-Setup config.py
+Setup aiogram.config.json
 
-```python
-TOKEN = "YOUR TOKEN"
-RESERVE_TOKEN = "YOUR RESERVE TOKEN"
+```json
+{
+    "TOKEN" : "YOUR TOKEN"
+}
 ```
 
 Launch app
@@ -102,9 +108,8 @@ This template contains the following widgets:
 * button
 * button slider
 * calendar
-* questions chain
 
-I think it makes no sense to explain what each of the widgets does, if it is not clear, just check for yourself
+I think it makes no sense to explain what each of the widgets does, if it is not clear, just check it by yourself
 
 #### controller
 
