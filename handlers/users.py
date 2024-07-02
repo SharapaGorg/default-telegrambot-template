@@ -9,20 +9,24 @@ from aiogram.filters.command import Command
 from aiogram.fsm.context import FSMContext
 from random import randint
 
+from aiogram import Router
 
-@dp.message(Command("start"))
+router = Router(name='users_router')
+
+
+@router.message(Command("start"))
 @check_user
 async def start_(message: Message):
     await message.answer(start, reply_markup=ReplyKeyboardRemove())
 
 
-@dp.message(Command("ping"))
+@router.message(Command("ping"))
 @check_user
 async def ping_(message: Message):
     await message.answer("Pong!")
 
 
-@dp.message(Command("button_slider"))
+@router.message(Command("button_slider"))
 @check_user
 async def button_slider_example(message: Message):
     message = await message.answer("What button slider looks like:")
@@ -44,7 +48,7 @@ async def show_button_number(callback: CallbackQuery, button_number: int):
     )
 
 
-@dp.message(Command("calendar"))
+@router.message(Command("calendar"))
 @check_user
 async def calendar_widget_example(message: Message):
     message = await message.answer("What calendar widget looks like:")
@@ -57,7 +61,7 @@ async def calendar_widget_example(message: Message):
 
 
 
-@dp.message(Command("quests"))
+@router.message(Command("quests"))
 @check_user
 async def quests_chain_widget_example(message: Message, state: FSMContext):
     user_id = message.from_user.id
