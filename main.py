@@ -1,18 +1,23 @@
 from api import app
-from controller import config_parser, bot, dp
+from controller import config_parser, bot, dp, bot2
 from rich import print
 import handlers
 
-WEBHOOK_PATH = f'/bot/{config_parser.token}'
-WEBHOOK_URL = f"https://0bd6-89-232-118-133.ngrok-free.app{WEBHOOK_PATH}"
+WEBHOOK_PATH = f'https://0bd6-89-232-118-133.ngrok-free.app'
+WEBHOOK_URL = f"{WEBHOOK_PATH}/bot/"
 
 @app.on_event('startup')
 async def on_start():
-    await bot.set_webhook(url=WEBHOOK_URL)
+    await bot.set_webhook(url=WEBHOOK_URL + config_parser.token)
+    await bot2.set_webhook(url=WEBHOOK_URL + config_parser.reserved_token)
+    
     dp.include_router(handlers.get_handlers_router())
     print('bot launched')
     
     bot_self = await bot.get_me()
+    other_bot_self = await bot.get_me()
+    
+    print("!!!:", other_bot_self.username)
 
     print("Bot launch initiated [+]")
     print(f"Username: [bold green]@{bot_self.username}[/bold green]")

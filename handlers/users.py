@@ -11,7 +11,7 @@ from random import randint
 
 from aiogram import Router
 
-router = Router(name='users_router')
+router = Router(name="users_router")
 
 
 @router.message(Command("start"))
@@ -22,8 +22,19 @@ async def start_(message: Message):
 
 @router.message(Command("ping"))
 @check_user
-async def ping_(message: Message):
-    await message.answer("Pong!")
+async def ping_(message: Message, state: FSMContext):
+    some_button = Button(text="Click me")
+    some_button.onClick(ping_button_click, state)
+
+    markup = InlineKeyboardMarkup(inline_keyboard=[[some_button]])
+
+    await message.answer("Pong!", reply_markup=markup)
+
+
+async def ping_button_click(callback: CallbackQuery, state: FSMContext):
+    await bot.edit_message_text(
+        "PONG PONG !!!", callback.from_user.id, callback.message.message_id
+    )
 
 
 @router.message(Command("button_slider"))
@@ -60,13 +71,12 @@ async def calendar_widget_example(message: Message):
     await calendar.render_page()
 
 
-
 @router.message(Command("quests"))
 @check_user
 async def quests_chain_widget_example(message: Message, state: FSMContext):
     user_id = message.from_user.id
     temp = randint(1, 100)
-    
+
     questions = {
         "name": "What is your name?",
         "surname": "What is your surname?",
@@ -78,11 +88,9 @@ async def quests_chain_widget_example(message: Message, state: FSMContext):
         print(temp)
         for answer in answers:
             print(answer, answers[answer])
-        
+
         await bot.send_message(user_id, "Thanks for your answers!")
 
-    chain = await QuestionsChain(
-        user_id, questions, get_answers, state
-    )
+    chain = await QuestionsChain(user_id, questions, get_answers, state)
 
     await chain.activate()

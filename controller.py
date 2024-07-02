@@ -40,19 +40,20 @@ class ConfigParser:
     @property
     def token(self):
         return self.data["TOKEN"]
+    
+    @property
+    def reserved_token(self):
+        return self.data['RESERVED_TOKEN']
 
 
 config_parser = ConfigParser()
 
-# clue : https://github.com/MasterGroosha/aiogram-3-guide/blob/master/code/01_quickstart/bot.py
-
-# https://github.com/DOFER998/aiogram-bot-template/blob/main/src/data/loader.py
-###### APP ######
 session = AiohttpSession(
     api=TelegramAPIServer.from_base("http://localhost:8080", is_local=True)
 )   
 
 bot = Bot(config_parser.token, parse_mode=None)
+bot2 = Bot(config_parser.reserved_token, parse_mode=None)
 
 dp = Dispatcher()
 dp["started_at"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
