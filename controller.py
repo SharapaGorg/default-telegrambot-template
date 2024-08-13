@@ -41,10 +41,6 @@ class ConfigParser:
     def token(self):
         return self.data["TOKEN"]
     
-    @property
-    def reserved_token(self):
-        return self.data['RESERVED_TOKEN']
-
 
 config_parser = ConfigParser()
 
@@ -53,7 +49,6 @@ session = AiohttpSession(
 )   
 
 bot = Bot(config_parser.token, parse_mode=None)
-bot2 = Bot(config_parser.reserved_token, parse_mode=None)
 
 dp = Dispatcher()
 dp["started_at"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")

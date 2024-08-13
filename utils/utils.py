@@ -26,6 +26,8 @@ async def startup():
         BotCommand(command=command_name, description=command_desc) for command_name, command_desc in commands.items()
     ]
     
+    await bot.set_my_commands(suggesting_commands) 
+
     console = Console()
     table = RichTable(
         "Name", 
@@ -43,7 +45,6 @@ async def startup():
     console.print(table)
         
     
-    await bot.set_my_commands(suggesting_commands) 
 
 def check_user(coro):
     """ decorator of check_user_ function below """

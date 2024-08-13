@@ -8,16 +8,28 @@ import datetime
 from aiogram.filters.command import Command
 from aiogram.fsm.context import FSMContext
 from random import randint
-
 from aiogram import Router
+
+from .panels.subscription import *
 
 router = Router(name="users_router")
 
 
 @router.message(Command("start"))
 @check_user
-async def start_(message: Message):
-    await message.answer(start, reply_markup=ReplyKeyboardRemove())
+async def start_(message: Message | CallbackQuery, state: FSMContext):
+    payment_button = Button(text="Subscription ⭐️")
+    payment_button.onClick(subscription_panel_callback, state, start_)
+
+    prefix = (
+        message.message.edit_text
+        if isinstance(message, CallbackQuery)
+        else message.answer
+    )
+
+    await prefix(
+        start, reply_markup=InlineKeyboardMarkup(inline_keyboard=[[payment_button]])
+    )
 
 
 @router.message(Command("ping"))
@@ -71,26 +83,7 @@ async def calendar_widget_example(message: Message):
     await calendar.render_page()
 
 
-@router.message(Command("quests"))
+@router.message()
 @check_user
-async def quests_chain_widget_example(message: Message, state: FSMContext):
-    user_id = message.from_user.id
-    temp = randint(1, 100)
-
-    questions = {
-        "name": "What is your name?",
-        "surname": "What is your surname?",
-        "smart": "Are you a smart person?",
-    }
-    print(temp)
-
-    async def get_answers(answers: dict):
-        print(temp)
-        for answer in answers:
-            print(answer, answers[answer])
-
-        await bot.send_message(user_id, "Thanks for your answers!")
-
-    chain = await QuestionsChain(user_id, questions, get_answers, state)
-
-    await chain.activate()
+async def parse_left_messages(message: Message):
+    await message.answer(default)
